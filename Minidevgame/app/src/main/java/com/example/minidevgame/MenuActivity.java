@@ -1,6 +1,4 @@
 package com.example.minidevgame;
-import android.nfc.Tag;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,9 +23,6 @@ public class MenuActivity extends AppCompatActivity {
         try {
             final DatabaseGame databaseGame = new DatabaseGame(this);
             final InputStream inputStream = databaseGame.getImageFromDatabase("100");
-            Log.d("PERONNALLOG", databaseGame.getTable() );
-
-
             if (inputStream != null) {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 imageView.setImageBitmap(bitmap);

@@ -1,6 +1,7 @@
 package com.example.minidevgame;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,24 +11,44 @@ import android.database.Cursor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
+import java.io.IOException;
 
+public class LoginActivity extends AppCompatActivity {
+    private DatabaseGame mDBHelper;
     private EditText connection_nom;
     private EditText connection_mdp;
     private Button connection_button;
     private Button connection_cree_compte;
+    Connection connect;
+    String ConnectionResult="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mDBHelper = new DatabaseGame(this);
         // Récupérer les références des éléments de l'interface utilisateur
         connection_nom = findViewById(R.id.connection_nom);
         connection_mdp = findViewById(R.id.connection_mdp);
         connection_button = findViewById(R.id.connection_button);
         connection_cree_compte = findViewById(R.id.connection_cree_compte);
+        try {
+            mDBHelper.copyDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gérer les erreurs lors de la copie de la base de données
+        }
+        // Maintenant que la base de données est copiée, vous pouvez l'ouvrir et accéder à vos données
+        SQLiteDatabase db = mDBHelper.openDatabase();
 
+        // Exemple de requête pour accéder aux données
+        Cursor cursor = db.rawQuery("SELECT * FROM your_table", null);
+        // Utilisez le curseur pour accéder aux données...
+
+        // N'oubliez pas de fermer la base de données et le curseur lorsque vous avez fini avec eux
+        cursor.close();
+        db.close();
         // Ajouter un écouteur de clic au bouton de connexion
         connection_button.setOnClickListener(new View.OnClickListener() {
             String nom = connection_nom.getText().toString().trim();
@@ -72,10 +93,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean verifierConnexion(String nom, String mot_de_passe) {
-        DatabaseGame databaseHelper = new DatabaseGame(this);
+        DatabaseGame databaseHelper = new DatabaseGame(this); // Assuming you initialize DatabaseGame here
         Cursor cursor = null;
         try {
-
+            // Remplacez "utilisateur" par le nom de votre table (si nécessaire)
             cursor = databaseHelper.getReadableDatabase().query("utilisateur", new String[] {"id"}, "nom=? AND mot_de_passe=?", new String[] {nom, mot_de_passe}, null, null, null);
 
             return cursor.moveToFirst();
