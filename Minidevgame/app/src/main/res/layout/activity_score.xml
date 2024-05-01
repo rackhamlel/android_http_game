@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ScoreActivity"
+    android:background="@drawable/backgroung">
+
+    <TextView
+        android:id="@+id/textViewScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="Score"/>
+
+    <Button
+        android:id="@+id/btnRejouer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rejouer"
+        android:layout_margin="8dp"/>
+
+    <Button
+        android:id="@+id/btnRetourMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retour Menu"
+        android:layout_margin="8dp"/>
+
+
+</LinearLayout>

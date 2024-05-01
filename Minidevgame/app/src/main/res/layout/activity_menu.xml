@@ -4,15 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MenuActivity">
+    tools:context=".MenuActivity"
+    android:background="@drawable/backgroung">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <Button
+        android:id="@+id/btnJouer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@null" />
+        android:text="Jouer"
+        android:layout_centerInParent="true"/>
 
+    <Button
+        android:id="@+id/btnSucces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Succès"
+        android:layout_below="@id/btnRegles"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/btnRegles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnJouer"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="Règles" />
 
 </RelativeLayout>

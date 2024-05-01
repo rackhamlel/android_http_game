@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".HTTPGameActivityReponse">
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
+        android:text=""/>
+
+    <Button
+        android:id="@+id/btnSuivant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Suivant"
+        android:layout_margin="16dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

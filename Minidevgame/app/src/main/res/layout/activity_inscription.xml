@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".InscriptionActivity">
+    tools:context=".InscriptionActivity"
+    android:background="@drawable/backgroung">
 
     <EditText
         android:id="@+id/inscription_nom"
@@ -38,5 +39,25 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="Créer un compte" />
+    <TextView
+        android:id="@+id/text_mot_de_passe_politique"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inscription_button"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="La politique de mot de passe exige que votre mot de passe contienne :\n\n\u2022 au moins 8 caractères\n\u2022 au moins une lettre majuscule\n\u2022 au moins une lettre minuscule\n\u2022 au moins un chiffre\n\u2022 au moins un caractère spécial"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+    <Button
+        android:id="@+id/retour_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_mot_de_passe_politique"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="Retour" />
 
 </RelativeLayout>

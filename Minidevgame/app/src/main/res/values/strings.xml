@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mini dev game</string>
+    <string name="regles_placeholder">Placeholder pour les règles du jeu</string>
 </resources>

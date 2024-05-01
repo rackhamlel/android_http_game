@@ -1,7 +1,9 @@
 package com.example.minidevgame;
 
+import static com.example.minidevgame.DatabaseGame.hashMotDePasse;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,48 +13,27 @@ import android.database.Cursor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-
 public class LoginActivity extends AppCompatActivity {
-    private DatabaseGame mDBHelper;
+
     private EditText connection_nom;
     private EditText connection_mdp;
     private Button connection_button;
     private Button connection_cree_compte;
-    Connection connect;
-    String ConnectionResult="";
-
-
+    private int utilisateurID;
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mDBHelper = new DatabaseGame(this);
+
         // Récupérer les références des éléments de l'interface utilisateur
         connection_nom = findViewById(R.id.connection_nom);
         connection_mdp = findViewById(R.id.connection_mdp);
         connection_button = findViewById(R.id.connection_button);
         connection_cree_compte = findViewById(R.id.connection_cree_compte);
-        try {
-            mDBHelper.copyDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Gérer les erreurs lors de la copie de la base de données
-        }
-        // Maintenant que la base de données est copiée, vous pouvez l'ouvrir et accéder à vos données
-        SQLiteDatabase db = mDBHelper.openDatabase();
 
-        // Exemple de requête pour accéder aux données
-        Cursor cursor = db.rawQuery("SELECT * FROM your_table", null);
-        // Utilisez le curseur pour accéder aux données...
-
-        // N'oubliez pas de fermer la base de données et le curseur lorsque vous avez fini avec eux
-        cursor.close();
-        db.close();
         // Ajouter un écouteur de clic au bouton de connexion
         connection_button.setOnClickListener(new View.OnClickListener() {
-            String nom = connection_nom.getText().toString().trim();
-            String mot_de_passe = connection_mdp.getText().toString().trim();
 
             @Override
             public void onClick(View v) {
@@ -60,10 +41,11 @@ public class LoginActivity extends AppCompatActivity {
                     // Récupérer les valeurs saisies par l'utilisateur
                     String nom = connection_nom.getText().toString().trim();
                     String mot_de_passe = connection_mdp.getText().toString().trim();
-
+                    String motDePasseHache = hashMotDePasse(mot_de_passe);
                     // Effectuer la vérification de connexion
-                    if (verifierConnexion(nom, mot_de_passe)) {
-                        AllerMenu();
+                    if (verifierConnexion(nom, motDePasseHache)) {
+                        userId = RecupererID();
+                        AllerMenu(userId);
                     } else {
                         Toast.makeText(LoginActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
                     }
@@ -80,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    // Ajouter la logique de création de compte ici
-                    // par exemple, rediriger vers l'écran de création de compte
+
                     allerInscription();
                 }catch (Exception e) {
                     e.printStackTrace();
@@ -92,14 +73,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("Range")
     private boolean verifierConnexion(String nom, String mot_de_passe) {
-        DatabaseGame databaseHelper = new DatabaseGame(this); // Assuming you initialize DatabaseGame here
+        DatabaseGame databaseHelper = new DatabaseGame(this);
         Cursor cursor = null;
         try {
-            // Remplacez "utilisateur" par le nom de votre table (si nécessaire)
+
             cursor = databaseHelper.getReadableDatabase().query("utilisateur", new String[] {"id"}, "nom=? AND mot_de_passe=?", new String[] {nom, mot_de_passe}, null, null, null);
 
-            return cursor.moveToFirst();
+            if (cursor.moveToFirst()) {
+                // Récupérer l'ID de l'utilisateur à partir du curseur
+                utilisateurID = cursor.getInt(cursor.getColumnIndex("id"));
+                return true; // Retourner true si la connexion est réussie
+            } else {
+                return false; // Retourner false si aucun utilisateur correspondant n'est trouvé
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -109,11 +97,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-    // Méthode pour rediriger vers la page suivante (à personnaliser)
-    private void AllerMenu() {
+    public int RecupererID(){
+
+        return utilisateurID;
+    }
+
+    private void AllerMenu(int userId) {
         // Créer un Intent pour passer de l'activité actuelle à MenuActivity
         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-
+        intent.putExtra("userId", userId); // Faire circuler l'ID de l'utilsateur
         // Démarrer l'activité MenuActivity
         startActivity(intent);
     }
