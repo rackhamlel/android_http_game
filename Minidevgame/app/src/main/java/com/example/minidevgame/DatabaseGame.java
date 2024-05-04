@@ -20,13 +20,7 @@ public class DatabaseGame extends SQLiteOpenHelper {
 
     private static DatabaseGame instance;
 
-    // Méthode pour obtenir une instance unique de DatabaseGame
-    public static synchronized DatabaseGame getInstance(Context context) {
-        if (instance == null) {
-            instance = new DatabaseGame(context.getApplicationContext());
-        }
-        return instance;
-    }
+
     public DatabaseGame(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -47,7 +41,9 @@ public class DatabaseGame extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL("CREATE TABLE utilisateur (id INTEGER PRIMARY KEY AUTOINCREMENT, nom TEXT NOT NULL, mot_de_passe TEXT NOT NULL)");
-
+            db.execSQL("INSERT INTO utilisateur (nom, mot_de_passe) VALUES \n" +
+                    "('Connection','QoghNQ6WkUkfYWt1TNgxX7hteXqzXYQ0eecy75BmUyQ='),\n"+
+                    "('toto','MfemXjFVhqwZi9eYtmKc5JA9CJlHbVdBqfMuLlIbamY=')");
             db.execSQL("CREATE TABLE succes (id INTEGER PRIMARY KEY AUTOINCREMENT, nom_realisation TEXT NOT NULL, description TEXT NOT NULL, status INTEGER NOT NULL)");
             db.execSQL("INSERT INTO succes (nom_realisation, description, status) VALUES \n" +
                     " ('Sans faute', 'Réussir une série sans aucune faute.', 0),\n" +
@@ -136,10 +132,10 @@ public class DatabaseGame extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Gérer les mises à jour de la structure de la base de données (si nécessaire)
+
     }
     @SuppressLint("Range")
-    public String getRandomName() {
+    public String getNomAleatoire() {
         String randomName = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT nom FROM num_http ORDER BY RANDOM() LIMIT 1", null);
@@ -163,16 +159,6 @@ public class DatabaseGame extends SQLiteOpenHelper {
         }
         return numeroLie;
     }
-
-
-    private static int currentUserId = -1; // Variable pour stocker l'ID de l'utilisateur connecté
-
-    // Méthode pour stocker l'ID de l'utilisateur connecté
-    public void setCurrentUserId(int userId) {
-        currentUserId = userId;
-    }
-
-
 
     public void updateSucceSansFaute(int userId) {
         SQLiteDatabase db = this.getWritableDatabase();

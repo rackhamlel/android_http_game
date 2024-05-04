@@ -24,7 +24,7 @@ public class HTTPGameActivityReponse extends DialogFragment {
         this.activity = activity;
     }
     public HTTPGameActivityReponse() {
-        // You can leave this empty if you don't need to initialize anything here.
+
     }
     @NonNull
     @Override
@@ -41,7 +41,6 @@ public class HTTPGameActivityReponse extends DialogFragment {
         btnSuivant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Mettez ici le code à exécuter lorsque le bouton "Suivant" est cliqué
                 activity.rafraichirJeu(); // Appel de la méthode dans l'activité principale
                 dismiss();
             }

@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    // Méthode pour rediriger vers l'écran de création de compte (à personnaliser)
+
     private void allerInscription() {
         // Créer un Intent pour passer de l'activité actuelle à MenuActivity
         Intent intent = new Intent(LoginActivity.this, InscriptionActivity.class);

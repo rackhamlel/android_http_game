@@ -64,47 +64,38 @@ public class HTTPGameActivity extends AppCompatActivity {
     }
 
     private void afficherNomAleatoire() {
-        nomAleatoire = dbHelper.getRandomName();
-        textViewNom.setText(nomAleatoire);
+        nomAleatoire = dbHelper.getNomAleatoire(); // Appel BDD
+        textViewNom.setText(nomAleatoire); // affichage dans le jeu
     }
 
     private void validerNumero() {
         String numeroSaisi = editTextChiffre.getText().toString().trim();
-
+        // vérifier si l'utilisateur à rentrer une information
         if (numeroSaisi.isEmpty()) {
             Toast.makeText(this, "Veuillez entrer un chiffre", Toast.LENGTH_SHORT).show();
             return;
         }
-
         int numeroSaisiInt = Integer.parseInt(numeroSaisi);
-
-        String message;
+        String message; // message pour l'utilisateur
         int numeroLie = dbHelper.recupererNumero(nomAleatoire);
-        if (numeroLie != -1 && numeroLie == numeroSaisiInt) {
+        if (numeroLie != -1 && numeroLie == numeroSaisiInt) { // Réponse correcte
             message = "Numéro correct ! \n " + numeroLie;
             score++;
             Log.d("-----------------id---------------", String.valueOf(userId));
             if (score==1){
-
-
-                if (userId != -1) {
-                    Log.d("-----------------id---------------", String.valueOf(userId));
-                } else {
-                    Log.d("-----------------id---------------", "userId is null");
-                }
-                dbHelper.updateSucceSansFaute(userId);
+                dbHelper.updateSucceSansFaute(userId); // update du succès
             }
-        } else {
+        } else { // Réponse Fausse
             message = "Numéro incorrect ! \nLe bon numéro est : " + numeroLie;
         }
 
         HTTPGameActivityReponse reponse = new HTTPGameActivityReponse(message, numeroSaisiInt, this);
-        reponse.show(getSupportFragmentManager(), "CustomDialog");
+        reponse.show(getSupportFragmentManager(), "CustomDialog"); // appel du pop-up
         nombreQuestionsRepondues++; // Incrémente le nombre de questions répondues
         afficherNombreQuestionsRepondues.setText("Nombre de questions répondues : " + nombreQuestionsRepondues + " / 10");
 
         // Vérifie si l'utilisateur a répondu à 10 questions
-        if (nombreQuestionsRepondues == 2) {
+        if (nombreQuestionsRepondues == 10) {
             afficherScore(); // Affiche le score
         }
     }

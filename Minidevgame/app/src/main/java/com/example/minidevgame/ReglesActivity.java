@@ -1,5 +1,7 @@
 package com.example.minidevgame;
 
+import static com.example.minidevgame.DatabaseGame.hashMotDePasse;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +15,6 @@ public class ReglesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regles_http);
-
         // Récupérer le TextView pour afficher les règles
         TextView reglesTextView = findViewById(R.id.regles_text_view);
 
@@ -33,7 +34,7 @@ public class ReglesActivity extends AppCompatActivity {
                 "6. Le joueur peut passer au niveau suivant ou quitter le jeu.\n" +
                 "Conseils :\n" +
                 "- Utilisez l'image du chat comme indice pour associer le code HTTP à la situation appropriée.\n" +
-                "- Assurez-vous de comprendre la signification de chaque code HTTP pour choisir la réponse correcte.\n";
+                "- Assurez-vous de comprendre la signification de chaque code HTTP pour choisir la réponse correcte.\n" ;
         reglesTextView.setText(regles);
 
         // Récupérer le bouton "Retour"

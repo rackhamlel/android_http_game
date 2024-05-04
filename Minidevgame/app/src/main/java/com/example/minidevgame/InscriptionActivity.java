@@ -129,7 +129,7 @@ public class InscriptionActivity extends AppCompatActivity {
         }
 
         // Vérifie si le mot de passe contient au moins un caractère spécial
-        if (!motDePasse.matches(".*[@#$%^&+=].*")) {
+        if (!motDePasse.matches(".*[@#$%^&+=/!()_{}|;:',.?~].*")) {
             afficherMessageErreur("Le mot de passe doit contenir au moins un caractère spécial.");
             return false;
         }
